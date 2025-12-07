@@ -5,7 +5,7 @@
 
 The team was tasked to use the learning outcomes from Applied Ai, Production AI, LLM Engineering from AISOC 2025 to develop novel impactful solutions using LLMs, RAG pipelines, biomolecular data from HuggingFace, and biomolecular knowledge bases (such as UniProt, OncoKB, etc).
 
-The Solution: By narrowing the scope to a high-impact domain:In view of the widespread use and abuse of skin bleaching creams within the African context and its attendent high incidence of pathology relating to skin diseases , for  Clinical Oncology We were able to engineer a specialized RAG system that allows clinicians and researchers to query complex information regarding skin cancer mutations (e.g., BRAF, NRAS, TP53).
+The Solution: By narrowing the scope to a high-impact local domain eg the widespread use and abuse of skin bleaching creams within the African context and the attendent high incidence of pathology relating to skin diseases, for  Clinical Oncology We were able to engineer a specialized RAG system that allows clinicians and researchers to query complex information regarding skin cancer mutations (e.g., BRAF, NRAS, TP53).
 
 Objective-to-Solution Matrix:
 Assignment Objective	Implemented Solution
