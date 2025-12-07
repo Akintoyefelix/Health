@@ -1,11 +1,11 @@
 
 🧬 Skin Cancer Mutation RAG System
 
-📋 Executive Synopsis & Alignment
+📋  Brief Outline 
 
-The Assignment Goal: The objective was to engineer a creative AI solution utilizing Large Language Models (LLMs), Retrieval-Augmented Generation (RAG) pipelines, HuggingFace biomolecular datasets, and external biological knowledge bases (like UniProt).
+The team was tasked to use the learning outcomes from Applied Ai, Production AI, LLM Engineering  to develop novel impactful solutions using LLMs, RAG pipelines, biomolecular data from HuggingFace, and biomolecular knowledge bases (such as UniProt, OncoKB, etc).
 
-The Solution: Our team successfully delivered on these objectives by narrowing the scope to a high-impact domain: Clinical Oncology. We engineered a specialized RAG system that allows clinicians and researchers to query complex information regarding skin cancer mutations (e.g., BRAF, NRAS, TP53).
+The Solution: By narrowing the scope to a high-impact domain:In view of the widespread use and abuse of skin bleaching creams within the African context and its attendent high incidence of pathology relating to skin diseases , for  Clinical Oncology We were able to engineer a specialized RAG system that allows clinicians and researchers to query complex information regarding skin cancer mutations (e.g., BRAF, NRAS, TP53).
 
 Objective-to-Solution Matrix:
 Assignment Objective	Implemented Solution
@@ -17,7 +17,9 @@ Production AI Track	Utilized 4-bit quantization (bitsandbytes) and memory-effici
 
 📘 Project Overview
 
-This project acts as an intelligent assistant for molecular oncology. Unlike a general-purpose chatbot, this system is grounded in scientific literature and biological facts. It answers questions specifically related to skin cancer protein mutations by combining three distinct layers of intelligence:
+The overall aim of the Project is to develop a useful tool for molecular dermatological oncology that would also be of high imapct within the african health space. Distinctly different from an off the shelf general-purpose chatbot, our solution is primed on concurrent scientific literature and biological facts. 
+
+The tool is specifically focused on skin cancer protein mutations by combining three distinct layers of intelligence:
 
     1. Knowledge Retrieval (RAG): Fetches relevant scientific instructions from a curated subset of the "Mol-Instructions" dataset.
     2. Fact-Checking (API): Real-time integration with the UniProt Knowledgebase to validate protein function, structure, and accession IDs.
