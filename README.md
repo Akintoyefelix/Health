@@ -1,5 +1,5 @@
 
-                                                        ## 🧬 CANCER MUTATION RAG SYSTEM
+                                                        # 🧬 CANCER MUTATION RAG SYSTEM
 The Solution: By narrowing the scope to a high-impact local domain eg the widespread use and abuse of skin bleaching creams within the African context and the attendent high incidence of pathology relating to skin diseases, for  Clinical Oncology We were able to engineer a specialized RAG system that allows clinicians and researchers to query complex information regarding skin cancer mutations (e.g., BRAF, NRAS, TP53).
 
 Objective-to-Solution Matrix:
