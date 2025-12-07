@@ -1,5 +1,5 @@
 
-                                                         🧬 CANCER MUTATION RAG SYSTEM
+                                                        ## 🧬 CANCER MUTATION RAG SYSTEM
 The Solution: By narrowing the scope to a high-impact local domain eg the widespread use and abuse of skin bleaching creams within the African context and the attendent high incidence of pathology relating to skin diseases, for  Clinical Oncology We were able to engineer a specialized RAG system that allows clinicians and researchers to query complex information regarding skin cancer mutations (e.g., BRAF, NRAS, TP53).
 
 Objective-to-Solution Matrix:
@@ -11,7 +11,7 @@ Knowledge Bases	Built a real-time UniProt API Bridge to fetch ground-truth prote
 Production AI Track	Utilized 4-bit quantization (bitsandbytes) and memory-efficient caching to ensure the tool runs on consumer hardware/Free-tier Colab.
 
 
-📘OVERVIEW|DATA ORIGIN|PREPROCESSING
+#📘OVERVIEW|DATA ORIGIN|PREPROCESSING
 
 The overall aim of the Project is to develop a useful tool for molecular dermatological oncology that would also be of high imapct within the african health space.
 Distinctly different from an off the shelf general-purpose chatbot, our solution is primed on concurrent scientific literature and biological facts. 
