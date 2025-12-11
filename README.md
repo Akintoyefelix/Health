@@ -1,5 +1,4 @@
-
-                                                        # 🧬 CANCER MUTATION RAG SYSTEM
+# 🧬 CANCER MUTATION RAG SYSTEM
 
 ## Overview
 
@@ -44,28 +43,33 @@ pip install -q gradio requests
 ## 📂 System Architecture & API Reference
 
 ### 1. Data Ingestion: MolInstructions
+
 - **Role**: The Gatekeeper
 - **Function**: Manages the ingestion of raw scientific text. Restricts data ingestion/input strictly within skin-cancer-related terms (e.g., 'melanoma', 'V600E')
 - **Key Method**: `download_and_filter(max_samples=5000)` — Streams the "zjunlp/Mol-Instructions" dataset and saves a local optimized JSON (cancer_filtered.json)
 
 ### 2. Knowledge Base Bridge: UniProt
+
 - **Role**: The Fact-Checker
 - **Function**: Connects to the UniProt Knowledgebase to provide "ground truth" data, critical for preventing LLM hallucinations regarding gene names or biological functions
 - **Key Method**: `fetch_protein_info(gene_name)` — Queries the UniProt REST API to extract Protein Name, Function, and Sequence Length
 - **Optimization**: Includes a `_load_cache` mechanism to prevent redundant API calls for commonly queried proteins (BRAF, TP53)
 
 ### 3. The Search Engine: CancerRAGRetriever
+
 - **Role**: The Librarian
 - **Function**: Converts text into mathematical vectors and retrieves specific scientific contexts relevant to the user's query
 - **Key Method**: `build_index(data)` — Creates a FAISS Index (IndexFlatIP) for efficient cosine similarity search
 - **Key Method**: `retrieve(query, top_k=3)` — Returns the top 3 most relevant scientific snippets for the prompt
 
 ### 4. The Brain: QuantizedLLM
+
 - **Role**: The Synthesizer
 - **Function**: A memory-efficient wrapper for the Llama model. Uses NF4 (NormalFloat 4-bit) quantization to achieve high performance with significantly lower VRAM usage
 - **Key Method**: `generate(prompt)` — Runs the inference loop with temperature control (0.7) to balance creativity and factual adherence
 
 ### 5. Main Controller: CancerMutationRAG
+
 - **Role**: The Conductor
 - **Function**: Orchestrates the entire pipeline
 - **Workflow** (query method):
