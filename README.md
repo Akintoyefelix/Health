@@ -16,79 +16,98 @@ By narrowing the scope to a high-impact local domain—the widespread use and ab
 
 ## 🛠️ Tech Stack
 
-- **Language**: Python 3.10+
+- **Language**: Python 3.11+
 - **LLM Engine**: unsloth/Llama-3.2-1B-Instruct (4-bit Quantized via bitsandbytes & accelerate)
+- **RAG Framework**: LlamaIndex
 - **Embeddings**: sentence-transformers/all-MiniLM-L6-v2
-- **Vector Database**: FAISS (Facebook AI Similarity Search) - CPU Index
+- **Vector Database**: ChromaDB
 - **Data Orchestration**: HuggingFace Datasets, UniProt REST API
-- **Interface**: Gradio
+- **Interface**: Streamlit
+- **Deployment**: Docker, Google Cloud Platform (App Engine / Cloud Run)
 
 ## 📦 Installation Setup
 
-Deploying the Solution requires a Python environment.
+### Local Development
 
-Use the BASH command shell to:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Akintoyefelix/Health.git
+   cd Health
+   ```
 
-```bash
-# 1. Install core RAG and LLM dependencies
-pip install -q datasets transformers sentence-transformers faiss-cpu
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-# 2. Install optimization libraries for Production AI (Quantization)
-pip install -q bitsandbytes accelerate
+3. **Run the application**
+   ```bash
+   streamlit run app.py
+   ```
 
-# 3. Install Interface and Networking tools
-pip install -q gradio requests
-```
+### Docker Deployment
+
+1. **Build the image**
+   ```bash
+   docker build -t skin-cancer-rag .
+   ```
+
+2. **Run the container**
+   ```bash
+   docker run -p 8080:8080 skin-cancer-rag
+   ```
 
 ## 📂 System Architecture & API Reference
 
-### 1. Data Ingestion: MolInstructions
+### 1. Data Ingestion & RAG Engine (`rag_engine.py`)
+- **Framework**: Built on **LlamaIndex** for robust document indexing and retrieval.
+- **Vector Store**: Uses **ChromaDB** for persistent storage of embeddings.
+- **Key Method**: `create_rag_engine()` — Initializes the LLM, embedding model, and vector index.
 
-- **Role**: The Gatekeeper
-- **Function**: Manages the ingestion of raw scientific text. Restricts data ingestion/input strictly within skin-cancer-related terms (e.g., 'melanoma', 'V600E')
-- **Key Method**: `download_and_filter(max_samples=5000)` — Streams the "zjunlp/Mol-Instructions" dataset and saves a local optimized JSON (cancer_filtered.json)
-
-### 2. Knowledge Base Bridge: UniProt
-
+### 2. Knowledge Base Bridge (`uniprot_utils.py`)
 - **Role**: The Fact-Checker
-- **Function**: Connects to the UniProt Knowledgebase to provide "ground truth" data, critical for preventing LLM hallucinations regarding gene names or biological functions
-- **Key Method**: `fetch_protein_info(gene_name)` — Queries the UniProt REST API to extract Protein Name, Function, and Sequence Length
-- **Optimization**: Includes a `_load_cache` mechanism to prevent redundant API calls for commonly queried proteins (BRAF, TP53)
+- **Function**: Connects to the UniProt Knowledgebase to provide "ground truth" data.
+- **Key Method**: `fetch_protein_info(gene_name)` — Queries the UniProt REST API to extract Protein Name, Function, and Sequence Length.
+- **Optimization**: Implements local caching to prevent redundant API calls.
 
-### 3. The Search Engine: CancerRAGRetriever
+### 3. User Interface (`app.py`)
+- **Framework**: **Streamlit**
+- **Function**: Provides a chat-based interface for clinicians to interact with the model.
+- **Features**: Maintains chat history and renders markdown responses.
 
-- **Role**: The Librarian
-- **Function**: Converts text into mathematical vectors and retrieves specific scientific contexts relevant to the user's query
-- **Key Method**: `build_index(data)` — Creates a FAISS Index (IndexFlatIP) for efficient cosine similarity search
-- **Key Method**: `retrieve(query, top_k=3)` — Returns the top 3 most relevant scientific snippets for the prompt
-
-### 4. The Brain: QuantizedLLM
-
-- **Role**: The Synthesizer
-- **Function**: A memory-efficient wrapper for the Llama model. Uses NF4 (NormalFloat 4-bit) quantization to achieve high performance with significantly lower VRAM usage
-- **Key Method**: `generate(prompt)` — Runs the inference loop with temperature control (0.7) to balance creativity and factual adherence
-
-### 5. Main Controller: CancerMutationRAG
-
-- **Role**: The Conductor
-- **Function**: Orchestrates the entire pipeline
-- **Workflow** (query method):
-  1. **Retrieve**: Calls CancerRAGRetriever to get text docs
-  2. **Verify**: Scans query for gene names and calls UniProtCache
-  3. **Construct**: Merges docs + UniProt facts into a strict system prompt
-  4. **Generate**: Calls QuantizedLLM for the final answer
+### 4. Configuration (`config.yaml`)
+- **Role**: Centralized configuration for model names, data paths, and hyperparameters.
+- **Benefit**: Allows easy switching of models or datasets without changing code.
 
 ## 🚀 Usage Example
 
-```python
-# Initialize the system
-rag_system = CancerMutationRAG()
-rag_system.initialize()
-
-# Query the system
-response = rag_system.query("How does the BRAF V600E mutation affect melanoma treatment?")
-print(response)
+```bash
+# Start the Streamlit application
+streamlit run app.py
 ```
+
+The application will launch in your browser, allowing you to interactively query the system about skin cancer mutations.
+
+## ☁️ Deployment
+
+### Google Cloud Platform (App Engine)
+
+1. **Deploy to App Engine**
+   ```bash
+   gcloud app deploy app.yaml
+   ```
+
+### Google Cloud Run
+
+1. **Build and Submit**
+   ```bash
+   gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/skin-cancer-rag
+   ```
+
+2. **Deploy**
+   ```bash
+   gcloud run deploy skin-cancer-rag --image gcr.io/YOUR_PROJECT_ID/skin-cancer-rag --platform managed
+   ```
 
 ## 📝 Project Summary
 
