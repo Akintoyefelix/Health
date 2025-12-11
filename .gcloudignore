@@ -1,0 +1,28 @@
+# Ignore git files
+.git
+.gitignore
+
+# Ignore Python cache
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+.pytest_cache
+
+# Ignore local data
+cache_data/
+db_chroma/
+*.pkl
+
+# Ignore development files
+.venv
+venv/
+.env
+.marscode/
+
+# Ignore test files
+tests/
+pytest.ini
+
+# Ignore notebooks
+*.ipynb
